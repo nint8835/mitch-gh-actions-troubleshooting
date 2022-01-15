@@ -21,16 +21,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 2
-      - name: get commit message
-        id: commit
+      - name: Get commit message
+        id: commit-msg
         run: |
-          echo ::set-output name=commitmsg::$(git log --format=%B -n 1 ${{ github.event.after }})
+          echo ::set-output name=commit-msg::$(git log --format=%B -n 1 ${{ github.event.after }})
       - name: show commit message
         run: echo $commitmsg
         env:
-          commitmsg: ${{ steps.commit.outputs.commitmsg }}
+          commitmsg: ${{ steps.commit-msg.outputs.commit-msg }}
       - name: Skip
-        if: contains(github.event.commits[0].message, '[skip tests]') == false
+        if: contains(steps.commit-msg.outputs.commit-msg, '[skip tests]') == false
         run: echo Skip
       - name: Don't skip
         run: echo Don\'t skip
