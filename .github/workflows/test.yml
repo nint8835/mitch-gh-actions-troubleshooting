@@ -14,6 +14,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
+      - name: Dump GitHub commits
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github.event.commits) }}
+        run: echo "$GITHUB_CONTEXT"
       - name: Skip
         if: contains(github.event.commits[0].message, '[skip tests]') == false
         run: echo Skip
