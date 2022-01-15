@@ -10,8 +10,10 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Context
-        run: echo ${{ github }}
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - name: Skip
         if: contains(github.event.commits[0].message, '[skip tests]') == false
         run: echo Skip
