@@ -25,10 +25,6 @@ jobs:
         id: commit-msg
         run: |
           echo ::set-output name=commit-msg::$(git log --format=%B -n 1 ${{ github.event.after }})
-      - name: show commit message
-        run: echo $commitmsg
-        env:
-          commitmsg: ${{ steps.commit-msg.outputs.commit-msg }}
       - name: Skip
         if: contains(steps.commit-msg.outputs.commit-msg, '[skip tests]') == false
         run: echo Skip
