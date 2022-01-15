@@ -18,6 +18,11 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github.event.commits) }}
         run: echo "$GITHUB_CONTEXT"
+      - name: get commit message
+        run: |
+          echo ::set-env name=commitmsg::$(git log --format=%B -n 1 ${{ github.event.after }})
+      - name: show commit message
+        run: echo $commitmsg
       - name: Skip
         if: contains(github.event.commits[0].message, '[skip tests]') == false
         run: echo Skip
