@@ -1,0 +1,19 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Context
+        run: echo ${{ github }}
+      - name: Skip
+        if: contains(github.event.commits[0].message, '[skip tests]') == false
+        run: echo Skip
+      - name: Don't skip
+        run: echo Don\'t skip
